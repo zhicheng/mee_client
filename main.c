@@ -5,7 +5,7 @@
  *
  */
 
-#include "mee_client.h"
+#include "main.h"
 
 #define JSON_BUFFER  1024
 
