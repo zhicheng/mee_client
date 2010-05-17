@@ -79,9 +79,6 @@ int main(int argc, char *argv[])
                 curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
                 curl_easy_setopt(curl, CURLOPT_USERPWD, optarg);
                 break;
-            case 'r':
-                curl_easy_setopt(curl, CURLOPT_URL, optarg);
-                break;
             case 'm':
                 if (strcmp(optarg, "PUT") == 0) {
                     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -106,6 +103,8 @@ int main(int argc, char *argv[])
         }
         opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
     }
+    curl_easy_setopt(curl, CURLOPT_URL, argv[argc - 1]);
+    printf("%s", argv[argc - 1]);
     build_header(curl);
     if (1 == post) {
         curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_object_to_json_string(json));

@@ -23,7 +23,6 @@
 
 static const struct option longOpts[] = {
     {"user", required_argument, NULL, 'u'},
-    {"url", required_argument, NULL, 'r'},
     {"method", required_argument, NULL, 'm'},
     {"string", required_argument, NULL, 's'}, 
     {"int", required_argument, NULL, 'i'},
