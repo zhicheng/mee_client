@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     int longIndex = 0;
     char userpwd[100];
     char **kv;
-    static const char *optString = "u:r:s:i:";
+    static const char *optString = "u:m:s:i:";
 
     CURL *curl;
     CURLcode res;

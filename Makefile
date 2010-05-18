@@ -9,5 +9,5 @@ utils.o: utils.c utils.h
 
 clean:
 	rm *.o
-	rm mee_client
+	rm mc 
 
