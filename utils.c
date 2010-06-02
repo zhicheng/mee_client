@@ -16,7 +16,6 @@ char* strndup(const char* str, size_t n)
     return NULL;
 }
 
-extern
 char **keyvalue(const char *kv)
 {
     char *delim = "=";

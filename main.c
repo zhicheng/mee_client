@@ -72,8 +72,7 @@ int main(int argc, char *argv[])
     CURL *curl;
     CURLcode res;
     curl = curl_easy_init();
-    opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
-    while (opt != -1) {
+    while ((opt = getopt_long(argc, argv, optString, longOpts, &longIndex)) != -1) {
         switch (opt) {
             case 'u':
                 curl_easy_setopt(curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -101,7 +100,6 @@ int main(int argc, char *argv[])
             default:
                 break;
         }
-        opt = getopt_long(argc, argv, optString, longOpts, &longIndex);
     }
     curl_easy_setopt(curl, CURLOPT_URL, argv[argc - 1]);
     printf("%s", argv[argc - 1]);
