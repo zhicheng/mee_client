@@ -26,6 +26,7 @@ static const struct option longOpts[] = {
     {"method", required_argument, NULL, 'm'},
     {"string", required_argument, NULL, 's'}, 
     {"int", required_argument, NULL, 'i'},
+    {"object", required_argument, NULL, 'o'},
     {NULL, no_argument, NULL, 0}
 };
 
@@ -33,6 +34,4 @@ void print_headers();
 void make_json(char *key, char *value, json_type json_t);
 
 #endif /* _MEE_CLIENT_H_ */
-
-
 

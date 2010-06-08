@@ -20,11 +20,13 @@ void make_json(char *key, char *value, json_type json_t)
 
     if (json_type_string == json_t) {
         new_json_object = json_object_new_string(value);
-        json_object_object_add(json, key, new_json_object);
     } else if (json_type_int == json_t) {
         new_json_object = json_object_new_int(atoi(value));
-        json_object_object_add(json, key, new_json_object);
+    } else if (json_type_array == json_t) {
+        //new_json_object = json_object_new_array();
+        new_json_object = json_tokener_parse(value); 
     }
+    json_object_object_add(json, key, new_json_object);
 }
 
 void print_header_str(char *header, CURLINFO type, CURL *curl)
@@ -67,7 +69,7 @@ int main(int argc, char *argv[])
     int longIndex = 0;
     char userpwd[100];
     char **kv;
-    static const char *optString = "u:m:s:i:";
+    static const char *optString = "u:m:s:i:o:";
 
     CURL *curl;
     CURLcode res;
@@ -96,6 +98,11 @@ int main(int argc, char *argv[])
                 post = 1;
                 kv = keyvalue(optarg);
                 make_json(kv[0], kv[1], json_type_int);
+                break;
+            case 'o':
+                post = 1;
+                kv = keyvalue(optarg);
+                make_json(kv[0], kv[1], json_type_array);
                 break;
             default:
                 break;
