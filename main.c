@@ -23,7 +23,6 @@ void make_json(char *key, char *value, json_type json_t)
     } else if (json_type_int == json_t) {
         new_json_object = json_object_new_int(atoi(value));
     } else if (json_type_array == json_t) {
-        //new_json_object = json_object_new_array();
         new_json_object = json_tokener_parse(value); 
     }
     json_object_object_add(json, key, new_json_object);
