@@ -125,10 +125,10 @@ int main(int argc, char *argv[])
 
     printf("\n================== content =================\n");
     res = curl_easy_perform(curl);
-    printf("\n================== header  =================\n");
+    printf("\n================== header ==================\n");
     if (CURLE_OK == res)
         print_headers(curl);
-    printf("\n================== end     =================\n");
+    printf("\n================== end =====================\n");
     return EXIT_SUCCESS;
 }
 

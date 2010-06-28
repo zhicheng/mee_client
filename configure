@@ -43,25 +43,26 @@ if test -n "$includedir"; then
   CMAKEFLAGS="$CMAKEFLAGS -DINCLUDE_INSTALL_DIR:PATH=$includedir"
 fi
 
-# print info.
-echo ""
-echo "We uses the CMake (http://www.cmake.org) buildsystem instead of configure."
-echo "CMake uses different options than configure, but some have direct equivalents:"
-echo "   <srcdir>           : the source directory"
-echo "   --prefix=<dir>     : -DCMAKE_INSTALL_PREFIX:PATH=<dir>"
-echo "   --bindir=<dir>     : -DBIN_INSTALL_DIR:PATH=<dir>"
-echo "   --includedir=<dir> : -DINCLUDE_INSTALL_DIR:PATH=<dir>"
-echo "   --libdir=<dir>     : -DLIB_INSTALL_DIR:PATH=<dir>"
-echo "Once CMake has run successfully, you can use \"make edit_cache\" to view and modify all settings."
-echo "fork from KDE configure script"
-echo ""
-echo "Your current configure options translate more or less to:"
-echo ""
-echo "   mkdir build && cd build"
-echo "   cmake$CMAKEFLAGS .. ; make ; make install"
-echo ""
-echo "using "
-echo "   make VERBOSE=1 "
-echo "to Makefile verbose output"
-echo ""
+rm -rf build
+mkdir build && cd build
+cmake $CMAKEFLAGS ..
+cd ..
+
+echo ".PHONY: all clean distclean install distro"               >  Makefile
+echo "all: distro"                                              >> Makefile
+echo ""                                                         >> Makefile
+echo "distro:"                                                  >> Makefile
+echo "\t@cd build && make"                                      >> Makefile
+echo ""                                                         >> Makefile
+echo "clean:"                                                   >> Makefile
+echo "\t@cd build && make clean"                                >> Makefile
+echo ""                                                         >> Makefile
+echo "distclean:"                                               >> Makefile
+echo "\t@rm -rf Makefile build"                                 >> Makefile
+echo ""                                                         >> Makefile
+echo "install: all"                                             >> Makefile
+echo "\t@cd build && make install"                              >> Makefile
+echo ""                                                         >> Makefile
+echo "uninstall:"                                               >> Makefile
+echo "\t@cd build && make uninstall"                            >> Makefile
 
