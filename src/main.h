@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <json.h>
+#include <json/json.h>
 #include <getopt.h>
 #define NDEBUG
 #include <assert.h>
