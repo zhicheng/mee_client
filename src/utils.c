@@ -22,6 +22,10 @@ char **keyvalue(const char *kv)
     char *key;
     char *value;
     char **keyval = (char **)malloc(sizeof(char*) * 2);
+    if (!index(kv, delim[0])) {
+        printf("-s string is error\n");
+        exit(0);
+    }
     int i = strstr(kv, delim) - kv;
     keyval[0] = strndup(kv, i);
     keyval[1] = (char *)(kv + i + 1);
