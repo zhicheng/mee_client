@@ -11,7 +11,9 @@
 
 struct json_object *json = NULL; 
 
-void make_json(char *key, char *value, json_type json_t)
+
+/* generate json from parameters */
+void build_json(char *key, char *value, json_type json_t)
 {
     struct json_object *new_json_object;
 
@@ -55,8 +57,10 @@ void print_headers(CURL *curl)
 void build_header(CURL *curl)
 {
     struct curl_slist *chunk = NULL;
-    chunk = curl_slist_append(chunk, "Accept: application/json; charset=UTF-8");
-    chunk = curl_slist_append(chunk, "Content-Type: application/json; charset=UTF-8");
+    chunk = curl_slist_append(chunk, "Accept: application/json;" 
+                                                        " charset=UTF-8");
+    chunk = curl_slist_append(chunk, "Content-Type: application/json;" 
+                                                        " charset=UTF-8");
     chunk = curl_slist_append(chunk, "Expect:");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
 }
@@ -66,8 +70,10 @@ int main(int argc, char *argv[])
     int post = 0;
     int opt = 0;
     int longIndex = 0;
+    int body_len = 0;
     char userpwd[100];
     char **kv;
+    const char *json_token;
     static const char *optString = "u:m:s:i:o:";
 
     CURL *curl;
@@ -91,17 +97,17 @@ int main(int argc, char *argv[])
             case 's':
                 post = 1;
                 kv = keyvalue(optarg);
-                make_json(kv[0], kv[1], json_type_string);
+                build_json(kv[0], kv[1], json_type_string);
                 break;
             case 'i':
                 post = 1;
                 kv = keyvalue(optarg);
-                make_json(kv[0], kv[1], json_type_int);
+                build_json(kv[0], kv[1], json_type_int);
                 break;
             case 'o':
                 post = 1;
                 kv = keyvalue(optarg);
-                make_json(kv[0], kv[1], json_type_array);
+                build_json(kv[0], kv[1], json_type_array);
                 break;
             default:
                 break;
@@ -111,16 +117,18 @@ int main(int argc, char *argv[])
     printf("%s", argv[argc - 1]);
     build_header(curl);
     if (1 == post) {
-        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_object_to_json_string(json));
-        curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE, (curl_off_t)strlen(json_object_to_json_string(json)));
+        body_len = (curl_off_t)strlen(json_object_to_json_string(json));
+        json_token = json_object_to_json_string(json);
+        curl_easy_setopt(curl, CURLOPT_POSTFIELDS, json_token);
+        curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE, body_len);
     }
 
-    printf("\n==================content=================\n");
+    printf("\n================== content =================\n");
     res = curl_easy_perform(curl);
-    printf("\n==================header=================\n");
+    printf("\n================== header  =================\n");
     if (CURLE_OK == res)
         print_headers(curl);
-    printf("\n================== end  =================\n");
+    printf("\n================== end     =================\n");
     return EXIT_SUCCESS;
 }
 

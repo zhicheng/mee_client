@@ -31,7 +31,7 @@ static const struct option longOpts[] = {
 };
 
 void print_headers();
-void make_json(char *key, char *value, json_type json_t);
+void build_json(char *key, char *value, json_type json_t);
 
 #endif /* _MEE_CLIENT_H_ */
 
