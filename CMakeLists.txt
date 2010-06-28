@@ -1,3 +1,4 @@
+# copyright (c) Zhicheng Wei 
 cmake_minimum_required(VERSION 2.8)
 project (mc)
 
