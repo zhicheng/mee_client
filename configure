@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 # Internal variables.
 alnum=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
 CMAKEFLAGS=
@@ -42,6 +41,14 @@ fi
 if test -n "$includedir"; then
   CMAKEFLAGS="$CMAKEFLAGS -DINCLUDE_INSTALL_DIR:PATH=$includedir"
 fi
+
+if [ ! -x "`which cmake`" ]; then
+    echo "The \"cmake\" program is required to configure mc.  It's"
+    echo "available from most ports/packaging systems and http://cmake.org"
+    exit 1
+fi
+
+
 
 rm -rf build
 mkdir build && cd build
